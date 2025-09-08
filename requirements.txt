@@ -1,0 +1,16 @@
+pandas
+joblib==1.5.2
+numpy
+scikit-learn==1.6.1
+kagglehub
+nltk
+matplotlib
+seaborn
+xgboost
+lightgbm
+dotenv
+mlflow
+azure-storage-blob
+IPython
+azure-identity
+adlfs

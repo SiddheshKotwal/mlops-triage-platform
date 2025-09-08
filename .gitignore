@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Secrets
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Large model files (use Azure storage instead)
+ml/models/
