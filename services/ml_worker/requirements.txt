@@ -1,0 +1,13 @@
+redis
+mlflow
+sqlalchemy
+psycopg2-binary
+python-dotenv
+scikit-learn==1.6.1
+pandas
+spacy==3.7.2
+azure-storage-blob
+nltk
+kagglehub
+azure-storage-blob
+adlfs

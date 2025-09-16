@@ -1,0 +1,10 @@
+# Dockerfile.mlflow (Final, Corrected Version)
+FROM python:3.13-slim
+
+# Install MLflow, Azure dependencies (including adlfs), curl, and postgres driver
+RUN apt-get update && \
+    apt-get install -y curl && \
+    pip install mlflow azure-storage-blob psycopg2-binary adlfs && \
+    rm -rf /var/lib/apt/lists/*
+
+# The command from the docker-compose.yml file will be used

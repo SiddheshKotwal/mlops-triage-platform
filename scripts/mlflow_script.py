@@ -5,7 +5,7 @@
 mlflow_script.py
 
 Usage:
-    python mlflow_script.py --content-dir "C:/Users/Lenovo/Desktop/mlops-triage-platform/mlops-triage-platform/ml/models" --mlflow-uri http://127.0.0.1:5000 --experiment "customer_ticket_classification_v1" --registry-name "BestOne_Model_Registry" --top-n 5 --transition-stage Staging
+    python mlflow_script.py --content-dir "C:/Users/Lenovo/Desktop/mlops-triage-platform/mlops-triage-platform/ml/category_models" --mlflow-uri http://127.0.0.1:5000 --experiment "ticket_category_retraining_v1" --registry-name "ticket_category_classifier" --top-n 5 --transition-stage Staging
 """
 
 import argparse

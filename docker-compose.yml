@@ -1,0 +1,95 @@
+# docker-compose.yml (Updated and Final Version)
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+  mlflow-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: mlflow_server
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s # Increased grace period for slow startup
+    command: >
+      sh -c "mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri 'postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}'
+      --default-artifact-root '${MLFLOW_ARTIFACT_ROOT}'
+      --serve-artifacts"
+
+  ingestion-api:
+    build:
+      context: .
+      dockerfile: services/ingestion_api/Dockerfile
+    container_name: ingestion_api
+    ports:
+      - "8001:8000"
+    depends_on:
+      - redis
+    env_file:
+      - ./.env
+
+  ml-worker:
+    build:
+      context: .
+      dockerfile: services/ml_worker/Dockerfile
+    container_name: ml-worker
+    restart: on-failure # Added for extra resilience
+    depends_on:
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      mlflow-server:
+        condition: service_healthy
+    env_file:
+      - ./.env
+
+  retraining-pipeline:
+    build:
+      context: .
+      dockerfile: retraining_pipeline/Dockerfile
+    env_file:
+      - ./.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mlflow-server:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

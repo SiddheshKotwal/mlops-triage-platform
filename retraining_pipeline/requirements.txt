@@ -1,0 +1,11 @@
+mlflow
+scikit-learn==1.6.1
+pandas
+lightgbm
+python-dotenv
+sqlalchemy
+psycopg2-binary
+nltk
+kagglehub
+azure-storage-blob
+adlfs

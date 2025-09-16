@@ -1,10 +1,6 @@
 # Virtual environment
 venv/
 
-# MLflow
-mlruns/
-mlflow.db
-
 # Secrets
 .env
 
@@ -19,3 +15,7 @@ __pycache__/
 
 # Large model files (use Azure storage instead)
 ml/models/
+
+
+run_cmds.txt
+dir_struct.txt

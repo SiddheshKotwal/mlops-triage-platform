@@ -8,9 +8,13 @@ matplotlib
 seaborn
 xgboost
 lightgbm
-dotenv
-mlflow
+python-dotenv
+mlflow==3.3.0
 azure-storage-blob
 IPython
 azure-identity
-adlfs
+sqlalchemy
+psycopg2-binary
+nltk
+locust
+redis
