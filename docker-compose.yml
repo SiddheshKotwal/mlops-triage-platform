@@ -42,7 +42,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s # Increased grace period for slow startup
+      start_period: 40s # Increased grace period for slow startup
     command: >
       sh -c "mlflow server
       --host 0.0.0.0
@@ -75,6 +75,19 @@ services:
       postgres:
         condition: service_healthy
       mlflow-server:
+        condition: service_healthy
+    env_file:
+      - ./.env
+
+  results-api:
+    build:
+      context: .
+      dockerfile: services/results_api/Dockerfile
+    container_name: results_api
+    ports:
+      - "8002:8000"
+    depends_on:
+      postgres:
         condition: service_healthy
     env_file:
       - ./.env

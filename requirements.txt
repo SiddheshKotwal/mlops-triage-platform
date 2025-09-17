@@ -1,7 +1,7 @@
 pandas
 joblib==1.5.2
 numpy
-scikit-learn==1.6.1
+scikit-learn==1.7.2
 kagglehub
 nltk
 matplotlib
