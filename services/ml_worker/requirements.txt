@@ -11,3 +11,4 @@ nltk
 kagglehub
 azure-storage-blob
 adlfs
+prometheus-client

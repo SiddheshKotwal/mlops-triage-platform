@@ -1,0 +1,45 @@
+# .github/workflows/build-and-push.yml
+name: Build and Push Docker Images
+
+# This workflow runs on any push to the main or develop branches
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  # --- IMPORTANT: Change this to the registry name you created in the Azure Portal ---
+  ACR_NAME: mlopstriagesystemacr 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: ACR login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_NAME }}.azurecr.io
+          
+      - name: Build and push Ingestion API
+        run: |
+          docker build . -f services/ingestion_api/Dockerfile -t ${{ env.ACR_NAME }}.azurecr.io/ingestion-api:latest
+          docker push ${{ env.ACR_NAME }}.azurecr.io/ingestion-api:latest
+
+      - name: Build and push Results API
+        run: |
+          docker build . -f services/results_api/Dockerfile -t ${{ env.ACR_NAME }}.azurecr.io/results-api:latest
+          docker push ${{ env.ACR_NAME }}.azurecr.io/results-api:latest
+
+      - name: Build and push ML Worker
+        run: |
+          docker build . -f services/ml_worker/Dockerfile -t ${{ env.ACR_NAME }}.azurecr.io/ml-worker:latest
+          docker push ${{ env.ACR_NAME }}.azurecr.io/ml-worker:latest

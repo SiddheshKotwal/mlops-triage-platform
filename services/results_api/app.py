@@ -11,10 +11,13 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import redis # <-- Import the standard sync redis client
 import redis.asyncio as redis_async # Use async redis client for the background task
+from starlette_prometheus import metrics, PrometheusMiddleware # <-- 1. Import
 
 # --- Configuration & Initialization ---
 load_dotenv()
 app = FastAPI(title="Results API & Real-Time Hub")
+app.add_middleware(PrometheusMiddleware, app_name="results_api")
+app.add_route("/metrics", metrics)      # <-- 3. Add the /metrics endpoint
 
 # --- CORS Middleware ---
 origins = ["http://localhost", "http://localhost:3000"]

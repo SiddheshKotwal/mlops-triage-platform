@@ -27,3 +27,17 @@ frontend/build
 frontend/.DS_Store
 
 notebooks/
+
+# --- NEW: CI/CD pipeline files ---
+.github/
+
+# --- NEW: Monitoring data (preventative) ---
+monitoring/prometheus/data/
+monitoring/grafana/data/
+
+run_cmds.txt
+dir_struct.txt
+future_work.txt
+react_installation.txt
+cicd.txt
+grafana_guide.txt

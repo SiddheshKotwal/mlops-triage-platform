@@ -21,3 +21,10 @@ run_cmds.txt
 dir_struct.txt
 future_work.txt
 react_installation.txt
+cicd.txt
+grafana_guide.txt
+
+
+# --- NEW: Monitoring data (preventative) ---
+monitoring/prometheus/data/
+monitoring/grafana/data/

@@ -1,0 +1,11 @@
+# monitoring/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'triage-services'
+    static_configs:
+      - targets:
+        - 'ingestion-api:8000'
+        - 'results-api:8000'
+        - 'ml-worker:8000'
