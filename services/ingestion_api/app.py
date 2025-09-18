@@ -3,10 +3,24 @@ import redis
 import uuid
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware # <-- 1. IMPORT THIS
 
 # --- Configuration & Initialization ---
 
 app = FastAPI(title="Ingestion API")
+
+# --- 2. ADD THE CORS MIDDLEWARE ---
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Connect to the Redis service. 
 # The hostname is 'redis', which is the service name in our docker-compose.yml file.

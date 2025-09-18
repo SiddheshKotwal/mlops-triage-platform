@@ -89,6 +89,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      redis: # <-- ADD THIS BLOCK
+        condition: service_started
     env_file:
       - ./.env
 

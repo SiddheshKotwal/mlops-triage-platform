@@ -1,8 +1,29 @@
 # .dockerignore
+
+# Git
 .git
+.gitignore
+
+# VSCode
 .vscode
+
+# Python Caches
 __pycache__/
 *.pyc
+
+# Secrets
 .env
-.pytest_cache/
+*.env
+
+# Python venv
 venv/
+
+# Testing artifacts
+.pytest_cache/
+
+# --- NEW: Frontend Artifacts ---
+frontend/node_modules
+frontend/build
+frontend/.DS_Store
+
+notebooks/

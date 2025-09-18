@@ -1,5 +1,6 @@
 # Virtual environment
 venv/
+frontend/node_modules
 
 # Secrets
 .env
@@ -19,3 +20,4 @@ ml/models/
 run_cmds.txt
 dir_struct.txt
 future_work.txt
+react_installation.txt

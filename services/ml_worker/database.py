@@ -24,6 +24,13 @@ def get_db_session():
 
 # --- Core Database Functions ---
 
+# --- NEW FUNCTION ---
+def get_ticket_by_id(session, ticket_id):
+    """Fetches a single, complete ticket record by its ID."""
+    stmt = text("SELECT * FROM tickets WHERE ticket_id = :ticket_id")
+    result = session.execute(stmt, {"ticket_id": str(ticket_id)}).first()
+    return result
+
 def get_or_create_model_record(session, model_name, model_version):
     """
     Checks if a model version is in the 'models' table. If not, it adds it.
