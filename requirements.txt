@@ -18,3 +18,5 @@ psycopg2-binary
 nltk
 locust
 redis
+starlette_prometheus
+prometheus_client
