@@ -14,7 +14,6 @@ COPY services/ml_worker/requirements.txt .
 RUN apt-get update && \
     apt-get install -y git curl libgomp1 build-essential && \
     pip install --no-cache-dir -r requirements.txt && \
-    python -m spacy download en_core_web_sm && \
     python -c "import nltk; nltk.download(['punkt', 'punkt_tab', 'stopwords', 'wordnet', 'averaged_perceptron_tagger', 'averaged_perceptron_tagger_eng'])" && \
     rm -rf /var/lib/apt/lists/*
 
