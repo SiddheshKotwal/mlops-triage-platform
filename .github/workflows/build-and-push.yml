@@ -1,7 +1,7 @@
-# .github/workflows/build-and-push.yml
+# .github/workflows/build-and-push.yml (Updated and Final Version)
+
 name: Build and Push Docker Images
 
-# This workflow runs on any push to the main or develop branches
 on:
   push:
     branches:
@@ -9,8 +9,7 @@ on:
       - develop
 
 env:
-  # --- IMPORTANT: Change this to the registry name you created in the Azure Portal ---
-  ACR_NAME: mlopstriagesystemacr 
+  ACR_NAME: mlopstriagesystemacr # <-- Make sure this is still your ACR name
 
 jobs:
   build:
@@ -18,16 +17,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Azure login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      # The Azure login step is no longer needed for this workflow.
+      # We will log in directly to the container registry.
 
       - name: ACR login
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.ACR_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
           
       - name: Build and push Ingestion API
         run: |
