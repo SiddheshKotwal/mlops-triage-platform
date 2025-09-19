@@ -11,13 +11,13 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import redis # <-- Import the standard sync redis client
 import redis.asyncio as redis_async # Use async redis client for the background task
-from starlette_prometheus import metrics, PrometheusMiddleware # <-- 1. Import
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # --- Configuration & Initialization ---
 load_dotenv()
 app = FastAPI(title="Results API & Real-Time Hub")
-app.add_middleware(PrometheusMiddleware, app_name="results_api")
-app.add_route("/metrics", metrics)      # <-- 3. Add the /metrics endpoint
+
+Instrumentator().instrument(app).expose(app)
 
 # --- CORS Middleware ---
 origins = ["http://localhost", "http://localhost:3000"]
@@ -62,7 +62,7 @@ manager = ConnectionManager()
 # --- Redis Subscriber Background Task ---
 async def redis_subscriber():
     """Listens to Redis Pub/Sub and broadcasts messages to connected clients."""
-    r = await redis.from_url(f"redis://{os.getenv('REDIS_HOST', 'redis')}", encoding="utf-8", decode_responses=True)
+    r = await redis_async.from_url(f"redis://{os.getenv('REDIS_HOST', 'redis')}", encoding="utf-8", decode_responses=True)
     async with r.pubsub() as pubsub:
         await pubsub.subscribe("ticket_updates")
         print("Subscribed to 'ticket_updates' channel.")

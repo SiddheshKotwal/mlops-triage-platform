@@ -4,13 +4,13 @@ import uuid
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware # <-- 1. IMPORT THIS
-from starlette_prometheus import metrics, PrometheusMiddleware # <-- Import Counter
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # --- Configuration & Initialization ---
 
 app = FastAPI(title="Ingestion API")
-app.add_middleware(PrometheusMiddleware, app_name="ingestion_api")
-app.add_route("/metrics", metrics)      # <-- 3. Add the /metrics endpoint
+# instrument and expose
+Instrumentator().instrument(app).expose(app)
 
 # --- 2. ADD THE CORS MIDDLEWARE ---
 origins = [

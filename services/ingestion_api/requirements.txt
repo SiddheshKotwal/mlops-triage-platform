@@ -1,4 +1,4 @@
 fastapi
 uvicorn
 redis
-starlette-prometheus
+prometheus-fastapi-instrumentator
