@@ -31,7 +31,7 @@ jobs:
           # Install all requirements for testing
           pip install -r requirements.txt
           # Download NLTK data needed for the preprocessing test
-          python -c "import nltk; nltk.download(['punkt', 'stopwords', 'wordnet'])"
+          python -c "import nltk; nltk.download(['punkt', 'punkt_tab', 'stopwords', 'wordnet', 'averaged_perceptron_tagger', 'averaged_perceptron_tagger_eng'])"
 
       - name: Run tests with pytest and generate coverage report
         run: pytest --cov=.
