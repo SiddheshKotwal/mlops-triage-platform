@@ -1,6 +1,6 @@
-# .github/workflows/build-and-push.yml (Updated and Final Version)
+# .github/workflows/build-and-push.yml
 
-name: Build and Push Docker Images
+name: Test, Build, and Push Docker Images
 
 on:
   push:
@@ -9,19 +9,43 @@ on:
       - develop
 
 env:
-  ACR_NAME: mlopstriagesystemacr # <-- Make sure this is still your ACR name
+  # --- IMPORTANT: Make sure this is still your ACR name ---
+  ACR_NAME: mlopstriagesystemacr 
 
 jobs:
-  build:
+  # --- NEW JOB TO RUN TESTS ---
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      # The Azure login step is no longer needed for this workflow.
-      # We will log in directly to the container registry.
+        uses: actions/checkout@v4
 
-      - name: ACR login
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install all requirements for testing
+          pip install -r requirements.txt
+          # Download NLTK data needed for the preprocessing test
+          python -c "import nltk; nltk.download(['punkt', 'stopwords', 'wordnet'])"
+
+      - name: Run tests with pytest and generate coverage report
+        run: pytest --cov=.
+
+  # --- MODIFIED BUILD JOB ---
+  build:
+    # This job will only run if the 'test' job above succeeds
+    needs: test 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Log in to Azure Container Registry
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.ACR_NAME }}.azurecr.io

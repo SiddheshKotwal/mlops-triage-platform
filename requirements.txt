@@ -20,3 +20,7 @@ locust
 redis
 prometheus-fastapi-instrumentator
 prometheus_client
+pytest
+pytest-cov
+pytest-asyncio
+httpx
