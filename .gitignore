@@ -11,19 +11,15 @@ __pycache__/
 *.pyo
 *.pyd
 
+project_guide/
+
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
 # Large model files (use Azure storage instead)
 ml/models/
 
-run_cmds.txt
-dir_struct.txt
-future_work.txt
-react_installation.txt
-cicd.txt
-grafana_guide.txt
-
+raw_guide/
 
 # --- NEW: Monitoring data (preventative) ---
 monitoring/prometheus/data/
