@@ -223,14 +223,4 @@ pytest
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/SiddheshKotwal/mlops-triage-platform/issues) page
-2. Review the documentation
-3. Open a new issue with detailed information about your problem
-
 ---
-
-**Built with ❤️ for the MLOps community**
