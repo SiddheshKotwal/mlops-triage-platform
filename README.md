@@ -174,7 +174,8 @@ docker-compose up -d postgres redis mlflow-server ingestion-api ml-worker result
 ```bash
 cd frontend
 npm install
-npm start
+npm run build
+serve -s build
 ```
 
 ### 🌐 Access Your Services
