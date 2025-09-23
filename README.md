@@ -167,7 +167,7 @@ docker-compose run --build --rm retraining-pipeline all
 
 **Start All Backend Services:**
 ```bash
-docker-compose up --build -d
+docker-compose up -d postgres redis mlflow-server ingestion-api ml-worker results-api prometheus grafana
 ```
 
 **Start the Frontend:**
